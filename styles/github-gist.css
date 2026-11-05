@@ -1,0 +1,37 @@
+html:has(meta[name='hostname'][content='gist.github.com'])
+  .file-header
+  .file-info
+  span:has(
+    > svg.octicon:not(
+        img[data-vscode-icons]:not([data-vscode-icons-loading]) + svg
+      )
+  )::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  mask: var(
+      --vscode-icons-loader-mask,
+      var(--vscode-icons-fallback-loader-mask)
+    )
+    center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+html:has(meta[name='hostname'][content='gist.github.com'])
+  .file-header
+  .file-info
+  svg.octicon:not(
+    img[data-vscode-icons]:not([data-vscode-icons-loading]) + svg
+  ) {
+  display: none;
+}
+
+html:has(meta[name='hostname'][content='gist.github.com'])
+  .file-header
+  .file-info
+  img[data-vscode-icons][data-vscode-icons-loading] {
+  display: none !important;
+}

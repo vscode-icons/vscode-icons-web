@@ -1,0 +1,80 @@
+// A launch configuration that launches the extension inside a new window
+// Use IntelliSense to learn about possible Node.js debug attributes.
+// Hover to view descriptions of existing attributes.
+// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Chrome Extension",
+      "type": "chrome",
+      "request": "launch",
+      "url": "https://github.com/vscode-icons/vscode-icons/",
+      "env": {
+        "BROWSER": "CHROME"
+      },
+      "runtimeExecutable": "${workspaceFolder}/.cache/chrome/browser",
+      "runtimeArgs": [
+        "--disable-infobars",
+        "--disable-extensions-except=${workspaceFolder}/extension",
+        "--load-extension=${workspaceFolder}/extension",
+        "--force-dark-mode"
+      ],
+      "webRoot": "${workspaceFolder}",
+      "outFiles": ["${workspaceFolder}/extension/index.js"],
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "../src/*": "${workspaceFolder}/src/*"
+      },
+      "preLaunchTask": "npm: debug:chrome"
+    },
+    {
+      "name": "Debug Edge Extension",
+      "type": "msedge",
+      "request": "launch",
+      "url": "https://github.com/vscode-icons/vscode-icons/",
+      "env": {
+        "BROWSER": "EDGE"
+      },
+      "runtimeExecutable": "${workspaceFolder}/.cache/chromium/browser",
+      "runtimeArgs": [
+        "--disable-infobars",
+        "--disable-extensions-except=${workspaceFolder}/extension",
+        "--load-extension=${workspaceFolder}/extension",
+        "--force-dark-mode"
+      ],
+      "webRoot": "${workspaceFolder}",
+      "outFiles": ["${workspaceFolder}/extension/index.js"],
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "../src/*": "${workspaceFolder}/src/*"
+      },
+      "preLaunchTask": "npm: debug:edge"
+    },
+    {
+      "name": "Debug Firefox Extension",
+      "type": "firefox",
+      "request": "launch",
+      "firefoxExecutable": "${workspaceFolder}/.cache/firefox/browser",
+      "reAttach": false,
+      "addonPath": "${workspaceFolder}/extension",
+      "url": "https://github.com/vscode-icons/vscode-icons/",
+      "webRoot": "${workspaceFolder}",
+      "pathMappings": [
+        {
+          "url": "moz-extension://*/src/",
+          "path": "${workspaceFolder}/src/"
+        }
+      ],
+      "preLaunchTask": "npm: debug:firefox"
+    },
+    {
+      "name": "Debug Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--test"],
+      "console": "internalConsole",
+      "stopOnEntry": false
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "vscode-icons-web",
+  "description": "Replaces file and folder icons with VSCode Icons on code hosting sites",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Dimitris \"Jimi\" Charalampidis",
+    "email": "jimikar@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "Roberto Huertas",
+      "email": "roberto.huertas@outlook.com",
+      "url": "https://robertohuertas.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vscode-icons/vscode-icons-web"
+  },
+  "bugs": {
+    "url": "https://github.com/vscode-icons/vscode-icons-web/issues"
+  },
+  "homepage": "https://github.com/vscode-icons/vscode-icons-web#readme",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "keywords": [
+    "vscode",
+    "icons",
+    "web"
+  ],
+  "sponsor": {
+    "url": "https://github.com/sponsors/vscode-icons"
+  },
+  "type": "module",
+  "main": "",
+  "scripts": {
+    "prebuild:dev": "npm run cleanup",
+    "build:dev": "tsc -p tsconfig.json",
+    "predist": "npm run cleanup",
+    "dist": "node esbuild.ts",
+    "debug:extension": "npm run dist -- --debug",
+    "precheck": "npm run format",
+    "check": "npm run lint && npm run lint:md",
+    "cleanup": "rimraf ./coverage ./out ./extension ./dist",
+    "format": "prettier --log-level error --write .",
+    "lint": "eslint --fix",
+    "lint:md": "remark . --quiet --output",
+    "prepare": "husky",
+    "reinstall": "rimraf ./package-lock.json ./node_modules && npm i",
+    "test": "c8 --reporter=none node --test --test-timeout=15000 --experimental-default-config-file --disable-warning=ExperimentalWarning && c8 report",
+    "prepackage": "npm run cleanup",
+    "package": "npm run dist -- --package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "@puppeteer/browsers": "^3.0.0",
+    "@types/archiver": "^8.0.0",
+    "@types/chrome": "^0.3.0",
+    "@types/node": "~22.18.0",
+    "@types/sinon": "^22.0.0",
+    "@vscode-icons/vscode-icons-api": "^1.0.0",
+    "archiver": "^8.0.0",
+    "c8": "^12.0.0",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.0.0",
+    "eslint-import-resolver-typescript": "^4.0.0",
+    "eslint-plugin-import-x": "^4.0.0",
+    "esmock": "^3.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.0.0",
+    "puppeteer": "^25.16.0",
+    "remark-cli": "^12.0.0",
+    "remark-preset-remcohaszing": "^3.0.0",
+    "rimraf": "^6.0.0",
+    "sinon": "^22.0.0",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}

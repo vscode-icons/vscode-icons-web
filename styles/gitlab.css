@@ -1,0 +1,38 @@
+html[data-vscode-icons-gitlab]
+  li[role='treeitem']
+  [data-testid='file-row']
+  :is(svg, [role='img']):not([data-vscode-icons-error]) {
+  visibility: hidden !important;
+}
+
+html[data-vscode-icons-gitlab]
+  h1[data-testid='repository-heading']
+  svg.folder-icon:not([data-vscode-icons-error]) {
+  visibility: hidden !important;
+}
+
+html[data-vscode-icons-gitlab]
+  h1[data-testid='repository-heading']
+  img[data-vscode-icons][data-vscode-icons-size='32'] {
+  width: 32px;
+  height: 32px;
+}
+
+html[data-vscode-icons-gitlab]
+  .file-header-content
+  img[data-vscode-icons]:has(+ svg.gl-mr-3) {
+  margin-right: 8px;
+}
+
+html[data-vscode-icons-gitlab]
+  .file-tree-search-result-item
+  img[data-vscode-icons] {
+  margin-top: 4px;
+}
+
+html[data-vscode-icons-gitlab]
+  .js-blob-result
+  .js-file-title
+  img[data-vscode-icons] {
+  margin-right: 8px !important;
+}

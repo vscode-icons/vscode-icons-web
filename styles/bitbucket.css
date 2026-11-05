@@ -1,0 +1,23 @@
+html[data-vscode-icons-bitbucket]
+  img[data-vscode-icons][data-vscode-icons-size='24'],
+html[data-vscode-icons-bitbucket]
+  [role='img'][aria-label='Directory']
+  > img[data-vscode-icons] {
+  width: 24px;
+  height: 24px;
+}
+
+html[data-vscode-icons-bitbucket]
+  [data-qa='bk-file__header']
+  img[data-vscode-icons]
+  + [data-qa='bk-filepath'] {
+  display: inline-block;
+}
+
+html[data-vscode-icons-bitbucket]
+  [data-qa='bk-file__header']
+  img[data-vscode-icons]:has(+ [data-qa='bk-filepath']) {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px !important;
+}

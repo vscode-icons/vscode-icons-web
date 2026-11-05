@@ -1,0 +1,30 @@
+@keyframes vscode-icons-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:root {
+  --vscode-icons-fallback-loader-mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2"><circle cx="8" cy="8" r="7" stroke-opacity=".25"/><path d="M15 8a7.002 7.002 0 00-7-7"/></svg>');
+}
+
+img[data-vscode-icons][data-vscode-icons-error] {
+  display: none !important;
+}
+
+img[data-vscode-icons]:not([data-vscode-icons-error]) + :is(svg, [role='img']) {
+  display: none !important;
+}
+
+img[data-vscode-icons] {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+  flex-shrink: 0;
+}
+
+img[data-vscode-icons][data-vscode-icons-loading] {
+  background-color: currentColor;
+  mask: var(--vscode-icons-loader-mask) center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
