@@ -1,0 +1,61 @@
+// A task runner that calls a custom npm script that compiles the extension.
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: debug:chrome",
+      // the command is a shell script
+      "type": "shell",
+      // we want to run npm
+      "command": "npm",
+      "args": ["run", "debug:extension", "--loglevel", "silent"],
+      "options": {
+        "env": { "BROWSER": "CHROME" }
+      },
+      "presentation": {
+        "reveal": "silent",
+        "showReuseMessage": false,
+        "revealProblems": "onProblem",
+        "close": true
+      },
+      "isBackground": false,
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "npm: debug:firefox",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "debug:extension", "--loglevel", "silent"],
+      "options": {
+        "env": { "BROWSER": "FIREFOX" }
+      },
+      "presentation": {
+        "reveal": "silent",
+        "showReuseMessage": false,
+        "revealProblems": "onProblem",
+        "close": true
+      },
+      "isBackground": false,
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "npm: debug:edge",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "debug:extension", "--loglevel", "silent"],
+      "options": {
+        "env": { "BROWSER": "EDGE" }
+      },
+      "presentation": {
+        "reveal": "silent",
+        "showReuseMessage": false,
+        "revealProblems": "onProblem",
+        "close": true
+      },
+      "isBackground": false,
+      "problemMatcher": "$tsc"
+    }
+  ]
+}

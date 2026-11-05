@@ -1,0 +1,169 @@
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > img[data-vscode-icons] {
+  width: 1em;
+  height: 1em;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > img[data-vscode-icons]:not([data-vscode-icons-error]):not(
+    [data-vscode-icons-loading]
+  )
+  + b.fa-folder-open-o {
+  display: none !important;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > img[data-vscode-icons][data-vscode-icons-loading] {
+  display: none !important;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > b.fa-folder-open-o[title='Root directory'] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  mask: var(
+      --vscode-icons-loader-mask,
+      var(--vscode-icons-fallback-loader-mask)
+    )
+    center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > b.fa-folder-open-o[title='Root directory']::before {
+  visibility: hidden;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > img[data-vscode-icons][data-vscode-icons-error]
+  + b.fa-folder-open-o[title='Root directory'] {
+  width: auto;
+  height: auto;
+  vertical-align: baseline;
+  background-color: transparent;
+  mask: none;
+  animation: none;
+}
+
+#content_base
+  h2.title
+  > span
+  > a:has(> b.fa-folder-open-o[title='Root directory'])
+  > img[data-vscode-icons][data-vscode-icons-error]
+  + b.fa-folder-open-o[title='Root directory']::before {
+  visibility: visible;
+}
+
+#files_list
+  th
+  a
+  img[data-vscode-icons]:not([data-vscode-icons-error])
+  + :is(.icon, i) {
+  display: none !important;
+}
+
+#files_list
+  tbody
+  :is(tr.file, tr.folder)
+  th
+  a
+  svg:not(img[data-vscode-icons]:not([data-vscode-icons-loading]) + svg) {
+  background-color: currentColor;
+  mask: var(
+      --vscode-icons-loader-mask,
+      var(--vscode-icons-fallback-loader-mask)
+    )
+    center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+#files_list
+  tbody
+  :is(tr.file, tr.folder)
+  th
+  a
+  svg:not(img[data-vscode-icons]:not([data-vscode-icons-loading]) + svg)
+  > * {
+  display: none;
+}
+
+#files_list th a img[data-vscode-icons][data-vscode-icons-loading] {
+  display: none !important;
+}
+
+#files_list th a img[data-vscode-icons][data-vscode-icons-loading] + svg {
+  display: inline-block !important;
+}
+
+#content_base
+  table
+  > tbody
+  > tr
+  > td:first-child
+  > a.icon
+  > i.fa:not(img[data-vscode-icons]:not([data-vscode-icons-loading]) + i) {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  mask: var(
+      --vscode-icons-loader-mask,
+      var(--vscode-icons-fallback-loader-mask)
+    )
+    center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+#content_base
+  table
+  > tbody
+  > tr
+  > td:first-child
+  > a.icon
+  > i.fa:not(
+    img[data-vscode-icons]:not([data-vscode-icons-loading]) + i
+  )::before {
+  visibility: hidden;
+}
+
+#content_base
+  table
+  > tbody
+  > tr
+  > td:first-child
+  > a.icon
+  > img[data-vscode-icons][data-vscode-icons-loading],
+#content_base
+  table
+  > tbody
+  > tr
+  > td:first-child
+  > a.icon
+  > img[data-vscode-icons]:not([data-vscode-icons-error]):not(
+    [data-vscode-icons-loading]
+  )
+  + i.fa {
+  display: none !important;
+}

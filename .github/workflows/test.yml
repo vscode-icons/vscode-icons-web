@@ -1,0 +1,159 @@
+name: Tests
+
+on:
+  push:
+    tags-ignore:
+      - '*'
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+  workflow_call:
+    inputs:
+      synced_data_artifact:
+        description: Artifact containing generated API data to test
+        required: false
+        type: string
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 5
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Find changed files
+        id: changed
+        env:
+          BASE_SHA: >-
+            ${{ github.event.pull_request.base.sha ||
+                github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          [[ -z "$BASE_SHA" ]] &&
+            BASE_SHA=$(git rev-parse "$HEAD_SHA^" 2>/dev/null || echo 0)
+          # A shallow clone may not contain the base commit. Fetch it, or fall
+          # back to linting everything.
+          if [[ ! "$BASE_SHA" =~ ^0+$ ]]; then
+            git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null ||
+              git fetch -q --no-tags --depth=1 origin "$BASE_SHA" 2>/dev/null ||
+              BASE_SHA=0
+          fi
+          [[ "$BASE_SHA" =~ ^0+$ ]] &&
+            BASE_SHA=$(git hash-object -t tree /dev/null)
+          git diff --name-only -z --diff-filter=ACMR \
+            "$BASE_SHA" "$HEAD_SHA" > "$RUNNER_TEMP/changed-files"
+          for task_name in prettier eslint markdown svg; do
+            : > "$RUNNER_TEMP/$task_name-files"
+          done
+          while IFS= read -r -d '' file_path; do
+            [[ -f "$file_path" ]] || continue
+            printf '%s\0' "$file_path" >> "$RUNNER_TEMP/prettier-files"
+            case "$file_path" in
+              *.js|*.cjs|*.mjs|*.jsx|*.ts|*.tsx)
+                task_name=eslint
+                ;;
+              *.md)
+                task_name=markdown
+                ;;
+              *.svg)
+                task_name=svg
+                ;;
+              *)
+                continue
+                ;;
+            esac
+            printf '%s\0' "$file_path" >> "$RUNNER_TEMP/$task_name-files"
+          done < "$RUNNER_TEMP/changed-files"
+      - name: Prettier
+        run: |
+          xargs -0 -r npx prettier \
+            --log-level=error --ignore-unknown --check -- \
+            < "$RUNNER_TEMP/prettier-files"
+      - name: ESLint
+        run: xargs -0 -r npx eslint --quiet -- < "$RUNNER_TEMP/eslint-files"
+      - name: remark
+        run: |
+          xargs -0 -r npx remark --quiet --frail -- \
+            < "$RUNNER_TEMP/markdown-files"
+
+  test:
+    needs: lint
+    name: Node.js ${{ matrix.node }} | ${{ matrix.os }} | ${{ matrix.arch }}
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        node:
+          - 26.x # latest LTS
+          - 24.x
+          - &minimum-lts-node 22.18
+        arch:
+          - x64
+        experimental:
+          - false
+        include:
+          - os: ubuntu-latest
+            node: node # latest node
+            experimental: true
+          - os: macos-latest
+            node: node # latest node
+            experimental: true
+          - os: windows-latest
+            node: node # latest node
+            experimental: true
+          - os: ubuntu-latest
+            node: *minimum-lts-node
+            coverage: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setting up Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cloning repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 5
+
+      - name: Download synced data
+        if: inputs.synced_data_artifact != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.synced_data_artifact }}
+
+      - name: Installing Dependencies
+        run: npm ci
+
+      - name: Test
+        continue-on-error: ${{ matrix.experimental }}
+        run: npm test
+
+      # - name: Upload coverage to Codecov
+      #   if: |
+      #     success() &&
+      #     matrix.coverage == true &&
+      #     github.repository_owner == 'vscode-icons' &&
+      #     github.actor != 'dependabot[bot]' &&
+      #     (github.event_name == 'push' || github.event_name == 'pull_request')
+      #   uses: codecov/codecov-action@v7
+      #   with:
+      #     files: coverage/lcov.info
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     fail_ci_if_error: false

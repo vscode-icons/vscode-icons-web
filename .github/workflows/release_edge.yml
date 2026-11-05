@@ -1,0 +1,11 @@
+name: Release for Edge
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ':'

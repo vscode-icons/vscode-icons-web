@@ -1,0 +1,16 @@
+name: Sync Icons from vscode-icons
+
+on:
+  repository_dispatch:
+    types: [icons-updated]
+  workflow_dispatch:
+
+concurrency:
+  group: sync-and-release
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ':'

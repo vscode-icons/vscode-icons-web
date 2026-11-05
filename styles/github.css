@@ -1,0 +1,100 @@
+html[data-vscode-icons-github]
+  tr.react-directory-row
+  .react-directory-filename-column {
+  position: relative;
+}
+
+html[data-vscode-icons-github]
+  tr.react-directory-row
+  .react-directory-filename-column:not(:has(img[data-vscode-icons]))
+  > svg {
+  visibility: hidden !important;
+}
+
+html[data-vscode-icons-github]
+  tr.react-directory-row
+  .react-directory-filename-column:not(:has(img[data-vscode-icons]))::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  margin: auto 0;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  mask: var(--vscode-icons-loader-mask) center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+html[data-vscode-icons-github]
+  li[role='treeitem']
+  > div
+  [class*='TreeView'][class*='ItemVisual'] {
+  position: relative;
+}
+
+nav[aria-label='Repository files'] a > span[data-component='icon'] {
+  position: relative;
+}
+
+nav[aria-label='Repository files']
+  a
+  > span[data-component='icon']:not(
+    :has(img[data-vscode-icons][data-vscode-icons-error])
+  )
+  > svg.octicon {
+  visibility: hidden !important;
+}
+
+nav[aria-label='Repository files']
+  a
+  > span[data-component='icon']:not(:has(img[data-vscode-icons]))::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  mask: var(
+      --vscode-icons-loader-mask,
+      var(--vscode-icons-fallback-loader-mask)
+    )
+    center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
+
+html[data-vscode-icons-github]
+  li[role='treeitem'][data-loading='true']
+  > div
+  [class*='TreeView'][class*='ItemVisual']
+  [data-component='Spinner'],
+html[data-vscode-icons-github]
+  li[role='treeitem']
+  > div
+  [class*='TreeView'][class*='ItemVisual']:not(
+    :has(img[data-vscode-icons][data-vscode-icons-error])
+  )
+  svg.octicon:not([class*='chevron']) {
+  visibility: hidden !important;
+}
+
+html[data-vscode-icons-github]
+  li[role='treeitem'][data-loading='true']
+  > div
+  [class*='TreeView'][class*='ItemVisual']::after,
+html[data-vscode-icons-github]
+  li[role='treeitem']
+  > div
+  [class*='TreeView'][class*='ItemVisual']:has(
+    svg.octicon:not([class*='chevron'])
+  ):not(:has(img[data-vscode-icons]))::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  mask: var(--vscode-icons-loader-mask) center / contain no-repeat;
+  animation: vscode-icons-spin 1s linear infinite;
+}
